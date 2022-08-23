@@ -19,7 +19,7 @@ router.get('/shipments/:referenceId', async (req: any, res: any) => {
     const result = await service.getCompleteShipmentData(req.param('referenceId'))
     return res.send(200, result);
   } catch (err) {
-    return res.send(400, { message: 'error' });
+    return res.send(400, { message: 'id Not Found' });
   }
 })
 

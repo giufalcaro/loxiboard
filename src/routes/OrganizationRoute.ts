@@ -19,10 +19,10 @@ router.get('/organizations/:id', async (req: any, res: any) => {
   try {
     const organizationService = new OrganizationService();
     const result = await organizationService.findOneById(req.param('id'))
-    return res.send(200, result);
+    return result.length > 0 ? res.send(200, result) : res.send(404, {  message: 'id not found' });
   } catch (err) {
     console.log(err)
-    return res.send(400, { message: 'error' });
+    return res.send(400, {  message: 'error' });
   }
 })
 
@@ -33,7 +33,7 @@ router.get('/weight/:unit', async (req: any, res: any) => {
     return res.send(200, result);
   } catch (err) {
     console.log(err)
-    return res.send(400, { message: 'error' });
+    return res.send(400, { message: 'make sure the weight parameter is valid ex: grams, pounds, kilograms' });
   }
 })
 
