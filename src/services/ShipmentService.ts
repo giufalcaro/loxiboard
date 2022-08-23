@@ -8,6 +8,9 @@ export default class ShipmentService {
     public async handleShipment(requestedShipment: any): Promise<string> {
         const repository = new ShipmentRepository();
         const shipment = this.convertToShipmentModel(requestedShipment);
+        if (!shipment._id) {
+            throw new Error()
+        }
         const { result: result } = await repository.update(shipment);
         return result.nModified > 0 ? 'updated' : 'inserted'
     }

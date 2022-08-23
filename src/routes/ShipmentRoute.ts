@@ -9,7 +9,7 @@ router.post('/shipment', async (req: any, res: any) => {
       const result = await service.handleShipment(req.body)
       return res.send(200, { result });
     } catch (err) {
-      return res.send(400, { message: 'error' });
+      return res.send(400, { message: 'make sure the request body is a valid shippment' });
     }
 })
 

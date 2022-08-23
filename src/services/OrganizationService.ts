@@ -5,6 +5,9 @@ export default class OrganizationService {
     public async handleOrganization(requestedOrganization: any): Promise<string> {
         const repository = new OrganizationRepository();
         const organization: Organization = this.convertToOrganizationModel(requestedOrganization)
+        if (!organization._id) {
+            throw new Error()
+        }
         const { result: result } = await repository.update(organization)
         return result.nModified > 0 ? 'updated' : 'inserted'
     }

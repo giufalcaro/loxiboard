@@ -11,7 +11,7 @@ router.post('/organization', async (req: any, res: any) => {
       return res.send(200, { result });
     } catch (err) {
       console.log(err)
-      return res.send(400, { message: 'error' });
+      return res.send(400, { message: 'make sure the request body is a valid organization' });
     }
 })
 
