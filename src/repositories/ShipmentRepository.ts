@@ -14,11 +14,7 @@ export default class ShipmentRepository {
         return (await this.getCollection()).find().toArray();
     }
 
-    public async insert(shipment: Shipment) {
-        return (await this.getCollection()).insertOne({ ...shipment });
-    }
-
     public async update(shipment: Shipment) {
-        return (await this.getCollection()).updateOne({ _id: shipment._id }, {$set: {...shipment}})
+        return (await this.getCollection()).updateOne({ _id: shipment._id }, {$set: {...shipment} }, { upsert: true })
     }
 }

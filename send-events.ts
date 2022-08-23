@@ -10,21 +10,23 @@ async function main() {
         }
 
         try {
-            await axios.post(`http://localhost:3000/${endpoint}`, message)
+           const result =  await axios.post(`http://localhost:3000/${endpoint}`, message)
+           console.log(result.data)
         } catch (error) {
+            console.log('error')
             console.error(error.code)
         }
 
     }
-
-    // const result = await axios.get(`http://localhost:3000/shipments/S00001175`)
-    // console.log(result)
-
-    // const result = await axios.get(`http://localhost:3000/organizations/34f195b5-2aa1-4914-85ab-f8849f9b541a`)
-    // console.log(result)
-
-    // const result = await axios.get(`http://localhost:3000/weight/grams`)
-    // console.log(result.data)
+    console.log('\n----------------------------------------------------------------')
+    const shipment = await axios.get(`http://localhost:3000/shipments/S00001175`)
+    console.log(shipment.data)
+    console.log('\n----------------------------------------------------------------')
+    const organization = await axios.get(`http://localhost:3000/organizations/34f195b5-2aa1-4914-85ab-f8849f9b541a`)
+    console.log(organization.data)
+    console.log('\n----------------------------------------------------------------')
+    const weight = await axios.get(`http://localhost:3000/weight/grams`)
+    console.log(weight.data)
 }
 
 main()

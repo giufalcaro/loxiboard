@@ -2,19 +2,15 @@ import Organization from "../models/Organization";
 import OrganizationRepository from "../repositories/OrganizationRepository";
 
 export default class OrganizationService {
-    public async handleOrganization(requestedOrganization: any) {
+    public async handleOrganization(requestedOrganization: any): Promise<string> {
         try {
             const repository = new OrganizationRepository();
             const organization: Organization = this.convertToOrganizationModel(requestedOrganization)
-            const existingOrganization = await repository.findById(organization._id)
-
-            if (existingOrganization.length != 0) {
-                await repository.update(organization)
-            } else {
-                await repository.insert(organization)
-            }
+            const {result: result} = await repository.update(organization)
+            return result.nModified > 0 ? 'updated' : 'inserted'
         } catch (err) {
-            console.log(err)
+            console.log('organization error: ' + err)
+            return `err: ${err}`
         }
     }
 

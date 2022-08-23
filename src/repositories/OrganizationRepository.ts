@@ -15,11 +15,7 @@ export default class OrganizationRepository {
         return (await this.getCollection()).find({ $and: [{ _id: id }] }).toArray();
     }
 
-    public async insert(organization: Organization) {
-        return (await this.getCollection()).insertOne({ ...organization });
-    }
-
     public async update(organization: Organization) {
-        return (await this.getCollection()).updateOne({ _id: organization._id }, {$set: {...organization}})
+        return (await this.getCollection()).updateOne({ _id: organization._id }, {$set: {...organization}}, { upsert: true })
     }
 }

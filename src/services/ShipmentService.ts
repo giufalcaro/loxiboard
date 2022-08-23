@@ -5,18 +5,15 @@ import WeightAggregationResult from "src/dtos/WeightAggregationResult";
 const {convert} = require('convert');
 
 export default class ShipmentService {
-    public async handleShipment(requestedShipment: any) {
+    public async handleShipment(requestedShipment: any): Promise<string> {
         try {
             const repository = new ShipmentRepository();
             const shipment = this.convertToShipmentModel(requestedShipment);
-            const existingShipment = await repository.findById(shipment._id);
-            if (existingShipment.length != 0) {
-                repository.update(shipment);
-            } else {
-                repository.insert(shipment);
-            }
+            const {result: result} = await repository.update(shipment);
+            return result.nModified > 0 ? 'updated' : 'inserted'
         } catch (err) {
-            console.log(err);
+            console.log('shipment error: ' + err);
+            return `err: ${err}`
         }
     }
 
@@ -25,9 +22,7 @@ export default class ShipmentService {
             const shipmentRepository = new ShipmentRepository();
             const organizationRepository = new OrganizationRepository();
             const shipment = await shipmentRepository.findById(id);
-            console.log(shipment);
             const organizations = await organizationRepository.findByCode(shipment[0].organizations)
-            console.log(organizations);
             shipment[0].organizations = organizations
             return shipment[0]
         } catch (err) {
