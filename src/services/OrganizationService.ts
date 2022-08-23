@@ -18,6 +18,15 @@ export default class OrganizationService {
         }
     }
 
+    public async findOneById(id: string) {
+        try {
+            const repository = new OrganizationRepository();
+            return (await repository.findById(id))[0]
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     protected convertToOrganizationModel(organization: any): Organization {
         return {
             _id: organization.id,

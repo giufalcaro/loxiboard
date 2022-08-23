@@ -16,6 +16,15 @@ async function main() {
         }
 
     }
+
+    // const result = await axios.get(`http://localhost:3000/shipments/S00001175`)
+    // console.log(result)
+
+    // const result = await axios.get(`http://localhost:3000/organizations/34f195b5-2aa1-4914-85ab-f8849f9b541a`)
+    // console.log(result)
+
+    // const result = await axios.get(`http://localhost:3000/weight/grams`)
+    // console.log(result.data)
 }
 
 main()

@@ -13,7 +13,7 @@ app.post('/shipment', async (req: any, res: any) => {
     service.handleShipment(req.body)
     return res.send(200, { message: 'ok' });
   } catch (err) {
-    return res.send(200, { message: 'error' });
+    return res.send(400, { message: 'error' });
   }
 })
 
@@ -23,15 +23,41 @@ app.post('/organization', async (req: any, res: any) => {
     organizationService.handleOrganization(req.body)
     return res.send(200, { message: 'ok' });
   } catch (err) {
-    return res.send(200, { message: 'error' });
     console.log(err)
+    return res.send(400, { message: 'error' });
   }
 })
 
-app.get('/shipments/:referenceId', (req: any, res: any) => {
+app.get('/shipments/:referenceId', async (req: any, res: any) => {
+  try {
+    const service = new ShipmentService();
+    const result = await service.getCompleteShipmentData(req.param('referenceId'))
+    return res.send(200, result);
+  } catch (err) {
+    return res.send(400, { message: 'error' });
+  }
 })
 
-app.get('/organizations/:id', (req: any, res: any) => {
+app.get('/organizations/:id', async (req: any, res: any) => {
+  try {
+    const organizationService = new OrganizationService();
+    const result = await organizationService.findOneById(req.param('id'))
+    return res.send(200, result);
+  } catch (err) {
+    console.log(err)
+    return res.send(400, { message: 'error' });
+  }
+})
+
+app.get('/weight/:unit', async (req: any, res: any) => {
+  try {
+    const organizationService = new ShipmentService();
+    const result = await organizationService.getTotalWeight(req.param('unit'))
+    return res.send(200, result);
+  } catch (err) {
+    console.log(err)
+    return res.send(400, { message: 'error' });
+  }
 })
 
 app.listen(port, () => {

@@ -7,6 +7,10 @@ export default class OrganizationRepository {
         return (await MongoPool.getInstance('local')).collection('organizations');
     }
 
+    public async findByCode(id: string[]) {
+        return (await this.getCollection()).find({ $and: [{ code: {$in: id} }] }).toArray();
+    }
+
     public async findById(id: string) {
         return (await this.getCollection()).find({ $and: [{ _id: id }] }).toArray();
     }

@@ -10,6 +10,10 @@ export default class ShipmentRepository {
         return (await this.getCollection()).find({ $and: [{ _id: id }] }).toArray();
     }
 
+    public async findAll() {
+        return (await this.getCollection()).find().toArray();
+    }
+
     public async insert(shipment: Shipment) {
         return (await this.getCollection()).insertOne({ ...shipment });
     }
