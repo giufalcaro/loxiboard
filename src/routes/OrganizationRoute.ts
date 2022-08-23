@@ -8,18 +8,18 @@ router.post('/organization', async (req: any, res: any) => {
     try {
       const organizationService = new OrganizationService();
       const result = await organizationService.handleOrganization(req.body)
-      return res.send(200, { result });
+      return res.status(200).send(result)
     } catch (err) {
       console.log(err)
-      return res.send(400, { message: 'make sure the request body is a valid organization' });
+      return res.status(400).send({ message:'make sure the request body is a valid organization' })
     }
 })
 
 router.get('/organizations/:id', async (req: any, res: any) => {
   try {
     const organizationService = new OrganizationService();
-    const result = await organizationService.findOneById(req.param('id'))
-    return result.length > 0 ? res.send(200, result) : res.send(404, {  message: 'id not found' });
+    const result = await organizationService.findOneById(req.params['id'])
+    return result.length > 0 ? res.status(200).send(result) : res.status(400).send({ message:'id not found' });
   } catch (err) {
     console.log(err)
     return res.send(400, {  message: 'error' });
@@ -29,11 +29,11 @@ router.get('/organizations/:id', async (req: any, res: any) => {
 router.get('/weight/:unit', async (req: any, res: any) => {
   try {
     const organizationService = new ShipmentService();
-    const result = await organizationService.getTotalWeight(req.param('unit'))
-    return res.send(200, result);
+    const result = await organizationService.getTotalWeight(req.params['unit'])
+    return res.status(200).send(result)
   } catch (err) {
     console.log(err)
-    return res.send(400, { message: 'make sure the weight parameter is valid ex: grams, pounds, kilograms' });
+    return res.status(400).send({ message:'make sure the weight parameter is valid (ex: grams, pounds, kilograms)' })
   }
 })
 
