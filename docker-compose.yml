@@ -1,0 +1,10 @@
+#install docker and docker-compose then run: docker pull mongo:latest then run: docker-compose up
+version: '3.1'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/data/db

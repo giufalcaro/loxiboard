@@ -35,7 +35,6 @@ async function getInstance(
     if (!db[databaseName]) {
         await initPool(databaseName, callback);
     } else {
-        // eslint-disable-next-line no-lonely-if
         if (callback) {
             callback(db[databaseName]);
         }
